@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>С Днём Рождения!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <h1>С Днём Рождения, Лера!</h1>
+  <p>
+    Желаю тебе бесконечного счастья, здоровья, исполнения всех мечт и тепла близких людей рядом! Пусть каждый день будет наполнен радостью, а в жизни будет место только для хорошего ✨
+  </p>
+  <!-- Таймер до следующего ДР -->
+  <div class="timer" id="countdown">⏳ Идёт обратный отсчёт...</div>
+  <button class="btn-scroll" onclick="document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})">
+    📸 Открыть видео 
+  </button>
+  <div id="gallery" class="gallery-wrapper">
+    <div class="gallery">
+      <img src="img\лера 1.jpg" alt="Фото 1"/>
+      <img src="img/лера 2.jpg" alt="Фото 2"/>
+      <img src="img//лера 3.jpg" alt="Фото 3"/>
+      <img src="img//лера 4.jpg" alt="Фото 4"/>
+      <img src="img//лера 5.jpg" alt="Фото 5"/>
+      <img src="img//лера 6.jpg" alt="Фото 6"/>
+      <img src="img//лера 7.jpg" alt="Фото 7"/>
+      <img src="img//лера 8.jpg" alt="Фото 8"/>
+      <img src="img//лера 9.jpg" alt="Фото 9"/>
+      <img src="img//лера 10.jpg" alt="Фото 10"/>
+    </div>
+  </div>
+  <!-- Видео поздравление -->
+  <div class="video-container">
+    <video controls autoplay muted playsinline>
+      <source src="video/IMG_3634.mp4" type="video/mp4">
+      Ваш браузер не поддерживает воспроизведение видео.
+    </video>
+  </div>
+  <footer>
+    С любовью, от Куся 💖
+  </footer>
+  <script src="index.js"></script>
+</body>
+</html>
