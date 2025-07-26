@@ -1,43 +1,53 @@
- const birthday = new Date("2026-07-03T00:00:00");
-    const countdown = document.getElementById("countdown");
-
+ const countdownEl = document.getElementById('countdown');
     function updateCountdown() {
       const now = new Date();
-      let nextBDay = new Date(birthday);
-      if (now > nextBDay) {
-        nextBDay.setFullYear(now.getFullYear() + 1);
-      }
-      const diff = nextBDay - now;
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-
-      countdown.innerHTML = `⏳ До следующего ДР осталось: ${days}д ${hours}ч ${minutes}м ${seconds}с`;
+      let next = new Date(now.getFullYear(), 6, 3); // 3 июля => месяц 6
+      if (now > next) next.setFullYear(now.getFullYear()+1);
+      const diff = next - now;
+      const d = Math.floor(diff/86400000);
+      const h = Math.floor((diff%86400000)/3600000);
+      const m = Math.floor((diff%3600000)/60000);
+      const s = Math.floor((diff%60000)/1000);
+      countdownEl.textContent = `${d} дн ${h}ч ${m}м ${s}с`;
     }
-
-    setInterval(updateCountdown, 1000);
+    setInterval(updateCountdown,1000);
     updateCountdown();
-    const galleryWrapper = document.querySelector('.gallery-wrapper');
-  const gallery = document.querySelector('.gallery');
-  const images = document.querySelectorAll('.gallery img');
 
-  // Клонируем изображения для бесконечной прокрутки
-  images.forEach(img => {
-    const clone = img.cloneNode(true);
-    gallery.appendChild(clone);
-  });
+    // Увеличение фото
+    const overlay = document.createElement('div');
+    overlay.id = 'overlay';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,0.8);z-index:9999;';
+    const overlayImg = document.createElement('img');
+    overlayImg.style.maxWidth='90vw'; overlayImg.style.maxHeight='90vh'; overlayImg.style.borderRadius='10px';
+    overlay.appendChild(overlayImg);
+    document.body.appendChild(overlay);
+    document.querySelectorAll('.gallery img').forEach(img=>{
+      img.addEventListener('click',()=>{
+        overlayImg.src = img.src;
+        overlay.style.display = 'flex';
+      });
+    });
+    overlay.addEventListener('click',()=> overlay.style.display='none');
 
-  // Автопрокрутка
-  let scrollSpeed = 0.5; // скорость прокрутки
-  function autoScroll() {
-    galleryWrapper.scrollLeft += scrollSpeed;
-    if (galleryWrapper.scrollLeft >= gallery.scrollWidth / 2) {
-      galleryWrapper.scrollLeft = 0;
+    // Бесконечная автопрокрутка
+    const galleryWrapper = document.getElementById('photoGallery');
+    let speed = 0.5, interacting = false;
+    galleryWrapper.addEventListener('mouseenter',()=>interacting=true);
+    galleryWrapper.addEventListener('mouseleave',()=>interacting=false);
+    galleryWrapper.addEventListener('touchstart',()=>interacting=true);
+    galleryWrapper.addEventListener('touchend',()=>interacting=false);
+
+    // Дублируем контент для плавности
+    const track = galleryWrapper.querySelector('.gallery');
+    track.innerHTML += track.innerHTML;
+
+    let pos = 0;
+    function autoScroll(){
+      if(!interacting){
+        pos += speed;
+        if(pos >= track.scrollWidth/2) pos = 0;
+        galleryWrapper.scrollLeft = pos;
+      }
+      requestAnimationFrame(autoScroll);
     }
-    requestAnimationFrame(autoScroll);
-  }
-
-  autoScroll();
- 
+    autoScroll();
