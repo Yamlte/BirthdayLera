@@ -1,7 +1,7 @@
 const countdownEl = document.getElementById('countdown');
 function updateCountdown() {
   const now = new Date();
-  let next = new Date(now.getFullYear(), 6, 3); // 3 июля (месяц — с нуля)
+  let next = new Date(now.getFullYear(), 7, 3); // 3 июля (месяц — с нуля)
   if (now > next) next.setFullYear(now.getFullYear() + 1);
   const diff = next - now;
   const d = Math.floor(diff / 86400000);
@@ -27,7 +27,7 @@ const galleryWrapper = document.getElementById('photoGallery');
 const track = galleryWrapper.querySelector('.gallery');
 track.innerHTML += track.innerHTML; // дублируем изображения
 
-let speed = 0.5;
+let speed = 1.0;
 let pos = 0;
 let isPaused = false;
 
